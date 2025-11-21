@@ -1,7 +1,7 @@
 # opensource
 //Rule
 - mọi người làm việc nhớ commit
-- clone file về nhớ vỏ visual studio 2022, tải các Workloads .NET, ASP.net, C# để hoạt động tốt dự án
+- clone file và sử dụng php cho dự án
 - Sử dụng framework .net và sử dụng ASP .net MVC
 - Đề tài website bán điện thoại với các chức năng như:
 + Login/Register tài khoản ở đây sẽ có 2 loại là ADMIN và COSTUMER
