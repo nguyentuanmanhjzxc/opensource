@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
         2: { id: 2, name: 'Iphone 14 Pro', price: 13790000, image: 'img/19.jpg', description: 'Trải nghiệm Dynamic Island độc đáo, camera chính 48MP đột phá.' },
         3: { id: 3, name: 'Iphone 15', price: 15390000, image: 'img/10.jpg', description: 'Thiết kế bo tròn mềm mại, cổng sạc USB-C tiện lợi.' },
         4: { id: 4, name: 'Samsung S25 Ultra', price: 12500000, image: 'img/20.jpg', description: 'Vua nhiếp ảnh di động với hệ thống camera zoom quang học ấn tượng.' },
+        18: { id: 18, name: 'Samsung Z Flip', price: 12500000, image: 'img/18.jpg', description: 'Vua nhiếp ảnh di động với hệ thống camera zoom quang học ấn tượng.' },
         
         // --- PHỤ KIỆN (Tai nghe) ---
         11: { id: 11, name: 'Airpods Pro 3', price: 6790000, image: 'img/11.jpg', description: 'Chất âm đỉnh cao, chống ồn chủ động.' },

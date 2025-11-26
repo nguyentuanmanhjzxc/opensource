@@ -39,8 +39,8 @@ include 'includes/header.php';
                     </div>
 
                      <div class="product-card" data-category="z_series" data-price="19000000">
-                        <div class="sale-badge">Mới</div>
-                        <a href="#">
+                        
+                        <a href="ProductDetail.php?id=18">
                             <img src="img/18.jpg" alt="Samsung Z Flip">
                         </a>
                         <p class="product-name">Samsung Galaxy Z Flip 5</p>
