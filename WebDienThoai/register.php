@@ -14,7 +14,6 @@
 
 <div class="login-wrapper">
     <form class="login-form" action="xuly_register.php" method="POST">
-        <a href="login.php" class="back-btn">←</a>
         <div class="login-header">
             <h1><b>The King</b></h1>
             <p class="form-subtitle"><b>Tạo tài khoản mới</b></p>
