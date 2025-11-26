@@ -27,9 +27,6 @@ if (!isset($pageTitle)) {
             <a href="index.php" class="logo">THE KING</a>
             <nav>
                 <a href="index.php">Trang chủ</a>
-                <a href="iphone.php">iPhone</a>
-                <a href="samsung.php">Samsung</a>
-                <a href="phukien.php">Phụ kiện</a>
                 <a href="sale.php" class="sale">Sale</a>
             </nav>
             <div class="header-icons">

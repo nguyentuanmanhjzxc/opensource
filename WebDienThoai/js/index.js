@@ -4,16 +4,25 @@ document.addEventListener('DOMContentLoaded', function() {
     // DATABASE SẢN PHẨM (GIẢ LẬP)
     // ===================================
     const allProducts = {
-        // ID: {Dữ liệu}
-        1: { id: 1, name: 'Iphone 13', price: 12890000, image: 'img/9.jpg', description: 'Hiệu năng mạnh mẽ với chip A15 Bionic, màn hình Super Retina XDR sắc nét và hệ thống camera kép tiên tiến.' },
-        2: { id: 2, name: 'Iphone 14 Pro', price: 13790000, image: 'img/19.jpg', description: 'Trải nghiệm Dynamic Island độc đáo, camera chính 48MP đột phá và hiệu năng vượt trội cho mọi tác vụ.' },
-        3: { id: 3, name: 'Iphone 15', price: 15390000, image: 'img/10.jpg', description: 'Thiết kế bo tròn mềm mại, cổng sạc USB-C tiện lợi và hiệu năng được nâng cấp toàn diện.' },
-        4: { id: 4, name: 'Samsung S25 Ultra', price: 12500000, image: 'img/20.jpg', description: 'Vua nhiếp ảnh di động với hệ thống camera zoom quang học ấn tượng, đi kèm bút S Pen đa năng.' },
-        5: { id: 5, name: 'Airpods Pro 3', price: 6790000, image: 'img/11.jpg', description: 'Chất âm đỉnh cao, khả năng chống ồn chủ động thông minh và thiết kế vừa vặn hoàn hảo.' },
-        6: { id: 6, name: 'AirPods Max USB C', price: 12990000, image: 'img/12.jpg', description: 'Trải nghiệm âm thanh không gian sống động như trong rạp hát với thiết kế sang trọng và cao cấp.' }
-        // Bạn có thể thêm các sản phẩm khác vào đây với ID tăng dần
-    };
+        // --- ĐIỆN THOẠI ---
+        1: { id: 1, name: 'Iphone 13', price: 12890000, image: 'img/9.jpg', description: 'Hiệu năng mạnh mẽ với chip A15 Bionic, màn hình Super Retina XDR sắc nét.' },
+        2: { id: 2, name: 'Iphone 14 Pro', price: 13790000, image: 'img/19.jpg', description: 'Trải nghiệm Dynamic Island độc đáo, camera chính 48MP đột phá.' },
+        3: { id: 3, name: 'Iphone 15', price: 15390000, image: 'img/10.jpg', description: 'Thiết kế bo tròn mềm mại, cổng sạc USB-C tiện lợi.' },
+        4: { id: 4, name: 'Samsung S25 Ultra', price: 12500000, image: 'img/20.jpg', description: 'Vua nhiếp ảnh di động với hệ thống camera zoom quang học ấn tượng.' },
+        
+        // --- PHỤ KIỆN (Tai nghe) ---
+        11: { id: 11, name: 'Airpods Pro 3', price: 6790000, image: 'img/11.jpg', description: 'Chất âm đỉnh cao, chống ồn chủ động.' },
+        12: { id: 12, name: 'AirPods Max USB C', price: 12990000, image: 'img/12.jpg', description: 'Âm thanh không gian sống động, thiết kế sang trọng.' },
+        14: { id: 14, name: 'Airpods 4', price: 3190000, image: 'img/14.jpg', description: 'Thiết kế open-ear thoải mái, chất âm cải tiến.' },
 
+        // --- PHỤ KIỆN (Ốp lưng & Sạc) ---
+        21: { id: 21, name: 'Ốp lưng MagSafe JINYA', price: 550000, image: 'img/21.jpg', description: 'Bảo vệ tối đa, hỗ trợ sạc không dây.' },
+        22: { id: 22, name: 'Ốp lưng Nylon PC TPU', price: 738000, image: 'img/22.jpg', description: 'Chất liệu bền bỉ, chống sốc tốt.' },
+        23: { id: 23, name: 'Ốp lưng MagSafe', price: 1071000, image: 'img/23.jpg', description: 'Chính hãng Apple, tích hợp nam châm mạnh mẽ.' },
+        24: { id: 24, name: 'Bộ Adapter Sạc 4 cổng', price: 1290000, image: 'img/24.jpg', description: 'Sạc nhanh nhiều thiết bị cùng lúc.' },
+        25: { id: 25, name: 'Adapter Sạc đa năng', price: 990000, image: 'img/25.jpg', description: 'Nhỏ gọn, tiện lợi khi đi du lịch.' },
+        26: { id: 26, name: 'Cáp Type C', price: 200000, image: 'img/26.jpg', description: 'Truyền dữ liệu tốc độ cao, bọc dù siêu bền.' }
+    };
     // ===================================
     // LOGIC GIỎ HÀNG (Sử dụng localStorage)
     // ===================================
@@ -124,46 +133,68 @@ document.addEventListener('DOMContentLoaded', function() {
     // ===================================
     // CHỨC NĂNG TRANG GIỎ HÀNG
     // ===================================
-    if (document.body.classList.contains('cart-page')) {
+  if (document.body.classList.contains('cart-page')) {
         const cartItemsContainer = document.getElementById('cart-items-container');
+        const cartSummaryBox = document.getElementById('cart-summary-box'); // Lấy khung tính tiền
         const subtotalPriceEl = document.getElementById('subtotal-price');
         const totalPriceEl = document.getElementById('total-price');
 
-        function displayCartItems() {
+      function displayCartItems() {
             cartItemsContainer.innerHTML = ''; // Xóa các item cũ
+            
+            // KIỂM TRA GIỎ HÀNG RỖNG (Giữ nguyên đoạn này)
             if (cart.length === 0) {
-                cartItemsContainer.innerHTML = '<p>Giỏ hàng của bạn đang trống.</p>';
-                subtotalPriceEl.textContent = '0đ';
-                totalPriceEl.textContent = '0đ';
+                if(cartSummaryBox) cartSummaryBox.style.display = 'none';
+                cartItemsContainer.innerHTML = `
+                    <div style="text-align: center; padding: 50px 0;">
+                        <div style="font-size: 60px; margin-bottom: 20px;">🛒</div>
+                        <h3>Giỏ hàng của bạn đang trống!</h3>
+                        <p style="margin-bottom: 30px; color: #666;">Hãy chọn thêm sản phẩm để mua sắm nhé.</p>
+                        <a href="index.php" class="cta-button">Quay lại mua sắm</a>
+                    </div>
+                `;
+                if(subtotalPriceEl) subtotalPriceEl.textContent = '0đ';
+                if(totalPriceEl) totalPriceEl.textContent = '0đ';
                 return;
             }
+
+            // NẾU CÓ SẢN PHẨM (Sửa đoạn này)
+            if(cartSummaryBox) cartSummaryBox.style.display = 'block';
 
             let subtotal = 0;
             cart.forEach(item => {
                 const itemTotal = item.price * item.quantity;
                 subtotal += itemTotal;
+
+                // --- ĐÂY LÀ ĐOẠN CẦN SỬA ---
                 const cartItemHTML = `
                     <div class="cart-item">
                         <img src="${item.image}" alt="${item.name}">
+                        
                         <div class="cart-item-details">
                             <p class="product-name">${item.name}</p>
-                            <p class="product-price">${item.price.toLocaleString('vi-VN')}đ</p>
+                            <p class="product-price">Đơn giá: ${item.price.toLocaleString('vi-VN')}đ</p>
                         </div>
+
                         <div class="quantity-selector">
                             <input type="number" value="${item.quantity}" min="1" data-id="${item.id}" class="cart-quantity-input">
                         </div>
+                        
                         <p class="item-total-price">${itemTotal.toLocaleString('vi-VN')}đ</p>
-                        <button class="remove-item-btn" data-id="${item.id}">×</button>
+                        
+                        <button class="remove-item-btn" data-id="${item.id}" title="Xóa sản phẩm">×</button>
                     </div>`;
+                // -----------------------------
+
                 cartItemsContainer.insertAdjacentHTML('beforeend', cartItemHTML);
             });
             
-            // Cập nhật tổng tiền
-            subtotalPriceEl.textContent = `${subtotal.toLocaleString('vi-VN')}đ`;
-            totalPriceEl.textContent = `${subtotal.toLocaleString('vi-VN')}đ`;
+            // Cập nhật tổng tiền (Giữ nguyên)
+            if(subtotalPriceEl) subtotalPriceEl.textContent = `${subtotal.toLocaleString('vi-VN')}đ`;
+            if(totalPriceEl) totalPriceEl.textContent = `${subtotal.toLocaleString('vi-VN')}đ`;
         }
 
-        // Hàm xử lý các sự kiện trong giỏ hàng (thay đổi số lượng, xóa)
+        // ... (Phần xử lý sự kiện handleCartActions giữ nguyên) ...
         function handleCartActions(event) {
             // Thay đổi số lượng
             if (event.target.classList.contains('cart-quantity-input')) {
@@ -173,28 +204,25 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (itemInCart && newQuantity > 0) {
                     itemInCart.quantity = newQuantity;
                     saveCart();
-                    displayCartItems(); // Vẽ lại giỏ hàng
+                    displayCartItems(); 
                     updateCartIcon();
                 }
             }
             // Xóa sản phẩm
             if (event.target.classList.contains('remove-item-btn')) {
                 const productId = parseInt(event.target.dataset.id);
-                cart = cart.filter(item => item.id !== productId); // Lọc và xóa sản phẩm
+                cart = cart.filter(item => item.id !== productId); 
                 saveCart();
-                displayCartItems(); // Vẽ lại giỏ hàng
+                displayCartItems(); 
                 updateCartIcon();
             }
         }
         
-        // Gắn sự kiện listener cho toàn bộ container
         cartItemsContainer.addEventListener('change', handleCartActions);
         cartItemsContainer.addEventListener('click', handleCartActions);
         
-        // Hiển thị các sản phẩm trong giỏ hàng khi tải trang
         displayCartItems();
     }
-
     // Luôn cập nhật icon giỏ hàng trên mọi trang khi tải xong
     updateCartIcon();
 });
