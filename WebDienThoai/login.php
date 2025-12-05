@@ -1,12 +1,29 @@
+<?php
+session_start();
+// Nếu đã đăng nhập rồi thì đá về trang chủ, không cho vào trang login nữa
+if (isset($_SESSION['user_id'])) {
+    header('Location: index.php');
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Đăng nhập</title>
-
-    <link rel="stylesheet" href="/css/login.css">
+    <title>Đăng nhập - THE KING</title>
+    <link rel="stylesheet" href="css/login.css">
+    <style>
+        .error-msg {
+            color: #e74c3c;
+            background: #fadbd8;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 14px;
+        }
+    </style>
 </head>
-
 <body>
 
 <div class="login-bg">
@@ -20,6 +37,20 @@
             <a href="index.php" class="back-btn-inside">←</a>
             <h1><b>The King</b></h1>
         </div>
+
+        <?php if (isset($_SESSION['error'])): ?>
+    <div class="error-msg" style="color: red; background: #fadbd8; padding: 10px; margin-bottom: 10px; text-align: center;">
+        <?= $_SESSION['error']; ?>
+        <?php unset($_SESSION['error']); ?>
+    </div>
+<?php endif; ?>
+
+<?php if (isset($_SESSION['success'])): ?>
+    <div class="success-msg" style="color: green; background: #d4edda; padding: 10px; margin-bottom: 10px; text-align: center;">
+        <?= $_SESSION['success']; ?>
+        <?php unset($_SESSION['success']); ?>
+    </div>
+<?php endif; ?>
 
         <div class="input-group">
             <label for="email">Email</label>
@@ -44,7 +75,6 @@
         <div class="login-links">
             <a href="register.php">Tạo tài khoản mới</a>
         </div>
-
     </form>
 </div>
 
@@ -54,6 +84,5 @@ function togglePass() {
     pass.type = pass.type === "password" ? "text" : "password";
 }
 </script>
-
 </body>
 </html>

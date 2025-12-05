@@ -2,11 +2,10 @@
 session_start();
 require_once 'includes/db.php';
 
-// CẤU HÌNH: ID danh mục Samsung trong CSDL là 2
-$category_id = 2; 
+// CẤU HÌNH: ID danh mục Phụ Kiện trong CSDL là 4
+$category_id = 4; 
 
 try {
-    // Logic truy vấn và sắp xếp
     $sql = "SELECT * FROM products WHERE category_id = :cat_id";
     
     $sort = $_GET['sorting'] ?? 'default';
@@ -15,7 +14,7 @@ try {
     } elseif ($sort == 'price-desc') {
         $sql .= " ORDER BY price DESC";
     } else {
-        $sql .= " ORDER BY id DESC"; // Mặc định: Mới nhất
+        $sql .= " ORDER BY id DESC";
     }
 
     $stmt = $conn->prepare($sql);
@@ -26,24 +25,24 @@ try {
     echo "Lỗi: " . $e->getMessage();
 }
 
-$pageTitle = "THE KING - Điện thoại Samsung";
+$pageTitle = "THE KING - Phụ Kiện Chính Hãng";
 include 'includes/header.php'; 
 ?>
 
 <main>
     <section class="section">
         <div class="container">
-            <h2 class="section-title">ĐIỆN THOẠI SAMSUNG</h2>
+            <h2 class="section-title">PHỤ KIỆN CHÍNH HÃNG</h2>
 
             <form id="filter-form" method="GET" action="">
                 <div class="filter-bar">
                     <div class="filter-options">
-                        <span>Dòng máy:</span>
+                        <span>Loại phụ kiện:</span>
                         <select id="category-filter" name="category">
                             <option value="all">Tất cả</option>
-                            <option value="s_series">Galaxy S Series</option>
-                            <option value="z_series">Galaxy Z (Gập)</option>
-                            <option value="a_series">Galaxy A Series</option>
+                            <option value="audio">Âm thanh (Tai nghe/Loa)</option>
+                            <option value="charge">Củ sạc & Cáp</option>
+                            <option value="case">Ốp lưng & Bao da</option>
                         </select>
                     </div>
                     <div class="sort-options">
@@ -57,15 +56,15 @@ include 'includes/header.php';
                 </div>
             </form>
 
-            <div id="product-grid" class="grid" style="grid-template-columns: repeat(3, 1fr);">
+            <div id="product-grid" class="grid" style="grid-template-columns: repeat(4, 1fr);">
                 <?php if (count($products) > 0): ?>
                     <?php foreach ($products as $row): ?>
                         <div class="product-card" 
                              data-category="<?= htmlspecialchars($row['series']) ?>" 
                              data-price="<?= $row['price'] ?>">
-                            
-                            <?php if (!empty($row['is_hot'])): ?>
-                                <div class="sale-badge">Hot</div>
+                             
+                             <?php if ($row['old_price'] > 0 && $row['old_price'] > $row['price']): ?>
+                                <div class="sale-badge">Sale</div>
                             <?php endif; ?>
 
                             <a href="ProductDetail.php?id=<?= $row['id'] ?>">
@@ -82,7 +81,7 @@ include 'includes/header.php';
                         </div>
                     <?php endforeach; ?>
                 <?php else: ?>
-                    <p style="grid-column: 1/-1; text-align: center;">Hiện chưa có sản phẩm Samsung nào.</p>
+                    <p style="grid-column: 1/-1; text-align: center;">Hiện chưa có phụ kiện nào.</p>
                 <?php endif; ?>
             </div>
         </div>
