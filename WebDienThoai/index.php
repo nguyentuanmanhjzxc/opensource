@@ -1,13 +1,26 @@
 <?php
+session_start();
+// 1. KẾT NỐI CSDL
+require_once 'includes/db.php';
+
+// 2. LẤY DỮ LIỆU SẢN PHẨM MỚI NHẤT (Hoặc bán chạy)
+// Lấy 4 sản phẩm để hiển thị, sắp xếp theo ID giảm dần (mới nhất lên đầu)
+try {
+    $stmt = $conn->prepare("SELECT * FROM products ORDER BY id DESC LIMIT 4");
+    $stmt->execute();
+    $products = $stmt->fetchAll();
+} catch (Exception $e) {
+    echo "Lỗi truy vấn: " . $e->getMessage();
+}
+
 // Đặt tiêu đề riêng cho trang này TRƯỚC khi gọi header
-$pageTitle = "THE KING - Điện thoại iPhone";
+$pageTitle = "THE KING - Trang Chủ";
 include 'includes/header.php'; 
 ?>
 
     <main>
-         <section class="hero-banner">
+        <section class="hero-banner">
             <div class="slider-wrapper">
-                <!-- Slide 1 -->
                 <div class="slide" style="background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('img/13.jpg');">
                     <div class="slide-content">
                         <h1>BỘ SƯU TẬP IPHONE MỚI</h1>
@@ -15,7 +28,6 @@ include 'includes/header.php';
                         <a href="iphone.php" class="cta-button">Mua ngay</a>
                     </div>
                 </div>
-                <!-- Slide 2 -->
                 <div class="slide" style="background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('img/27.jpg');">
                      <div class="slide-content">
                         <h1>SAMSUNG GALAXY S25 ULTRA</h1>
@@ -23,7 +35,6 @@ include 'includes/header.php';
                         <a href="samsung.php" class="cta-button">Khám Phá</a>
                     </div>
                 </div>
-                <!-- Slide 3 -->
                 <div class="slide" style="background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('img/1.jpg');">
                      <div class="slide-content">
                         <h1>PHỤ KIỆN CHÍNH HÃNG</h1>
@@ -32,7 +43,6 @@ include 'includes/header.php';
                     </div>
                 </div>
             </div>
-            <!-- Các nút điều hướng (chấm tròn) -->
             <div class="slider-dots">
                 <span class="dot active" data-slide="0"></span>
                 <span class="dot" data-slide="1"></span>
@@ -45,16 +55,14 @@ include 'includes/header.php';
                 <div class="grid" style="grid-template-columns: repeat(4, 1fr);">
                     <div class="category-card" style="text-align: center;">
                         <a href="iphone.php"><img src="img/16.jpg" alt="Điện Thoại Iphone"></a>
-                        
                         <h3>Iphone</h3>
                     </div>
                     <div class="category-card" style="text-align: center;">
-                        <img src="img/17.jpg" alt="Điện Thoại Xiaomi">
+                        <a href="xiaomi.php"><img src="img/17.jpg" alt="Điện Thoại Xiaomi"></a>
                         <h3>Xiaomi</h3>
                     </div>
                     <div class="category-card" style="text-align: center;">
                         <a href="samsung.php"><img src="img/18.jpg" alt="Điện Thoại SamSung"></a>
-                        
                         <h3>SamSung</h3>
                     </div>
                     <div class="category-card" style="text-align: center;">
@@ -64,39 +72,37 @@ include 'includes/header.php';
                 </div>
             </div>
         </section>
-            <hr>
+        
+        <hr>
+
         <section class="section" >
             <div class="container">
-                <h2 class="section-title">Sản Phẩm Bán Chạy Nhất</h2>
+                <h2 class="section-title">Sản Phẩm Mới Về</h2>
+                
                 <div class="grid">
-                    <div class="product-card">
-                        <a href="ProductDetail.php?id=1"><img  src="img/9.jpg" alt="Iphone 13"></a>
-                        <p class="product-name">Iphone 13</p>
-                        <p class="product-price">12.890.000đ</p>
-                    </div>
-                    <div class="product-card">
-                        <a href="ProductDetail.php?id=2"><img  src="img/19.jpg" alt="Iphone 14"></a>
-                        <p class="product-name">Iphone 14</p>
-                        <p class="product-price">13.790.000đ</p>
-                    </div>
-                    <div class="product-card">
-                        <a href="ProductDetail.php?id=3"><img  src="img/10.jpg" alt="Iphone 15"></a>
-                        <p class="product-name">Iphone 15</p>
-                        <p class="product-price">15.390.000</p>
-                    </div>
-                    <div class="product-card">
-                        <a href="ProductDetail.php?id=4"><img  src="img/20.jpg" alt="SamSung S25"></a>
-                        <p class="product-name">SamSung S25</p>
-                        <p class="product-price">12.500.000đ</p>
-                    </div>
+                    <?php if (count($products) > 0): ?>
+                        <?php foreach ($products as $row): ?>
+                            <div class="product-card">
+                                <a href="ProductDetail.php?id=<?= $row['id'] ?>">
+                                    <img src="<?= $row['image'] ?>" alt="<?= htmlspecialchars($row['name']) ?>">
+                                </a>
+                                
+                                <p class="product-name"><?= htmlspecialchars($row['name']) ?></p>
+                                
+                                <p class="product-price"><?= number_format($row['price'], 0, ',', '.') ?>đ</p>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <p>Chưa có sản phẩm nào.</p>
+                    <?php endif; ?>
                 </div>
-            </div>
+                </div>
         </section>
 
         <section class="mid-banner">
             <h2>GIẢM GIÁ 30% CHO TẤT CẢ PHỤ KIỆN</h2>
             <p>Sử dụng mã: <strong>MODERN30</strong> khi thanh toán</p>
-            <a href="#" class="cta-button" style="background-color: #CDBEA7;">Xem ngay</a>
+            <a href="sale.php" class="cta-button" style="background-color: #CDBEA7;">Xem ngay</a>
         </section>
 
         <section class="trust-badges">
@@ -136,3 +142,5 @@ include 'includes/header.php';
 
 <script src="js/category-filter.js"></script>
 <script src="js/index.js"></script>
+</body>
+</html>

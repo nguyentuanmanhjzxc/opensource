@@ -2,11 +2,10 @@
 session_start();
 require_once 'includes/db.php';
 
-// CẤU HÌNH: ID danh mục Samsung trong CSDL là 2
-$category_id = 2; 
+// CẤU HÌNH: ID danh mục Xiaomi trong CSDL là 3
+$category_id = 3; 
 
 try {
-    // Logic truy vấn và sắp xếp
     $sql = "SELECT * FROM products WHERE category_id = :cat_id";
     
     $sort = $_GET['sorting'] ?? 'default';
@@ -15,7 +14,7 @@ try {
     } elseif ($sort == 'price-desc') {
         $sql .= " ORDER BY price DESC";
     } else {
-        $sql .= " ORDER BY id DESC"; // Mặc định: Mới nhất
+        $sql .= " ORDER BY id DESC";
     }
 
     $stmt = $conn->prepare($sql);
@@ -26,14 +25,14 @@ try {
     echo "Lỗi: " . $e->getMessage();
 }
 
-$pageTitle = "THE KING - Điện thoại Samsung";
+$pageTitle = "THE KING - Điện thoại Xiaomi";
 include 'includes/header.php'; 
 ?>
 
 <main>
     <section class="section">
         <div class="container">
-            <h2 class="section-title">ĐIỆN THOẠI SAMSUNG</h2>
+            <h2 class="section-title">ĐIỆN THOẠI XIAOMI</h2>
 
             <form id="filter-form" method="GET" action="">
                 <div class="filter-bar">
@@ -41,9 +40,9 @@ include 'includes/header.php';
                         <span>Dòng máy:</span>
                         <select id="category-filter" name="category">
                             <option value="all">Tất cả</option>
-                            <option value="s_series">Galaxy S Series</option>
-                            <option value="z_series">Galaxy Z (Gập)</option>
-                            <option value="a_series">Galaxy A Series</option>
+                            <option value="xiaomi_flagship">Xiaomi Series (Cao cấp)</option>
+                            <option value="redmi">Redmi Note (Tầm trung)</option>
+                            <option value="poco">POCO (Hiệu năng cao)</option>
                         </select>
                     </div>
                     <div class="sort-options">
@@ -63,7 +62,7 @@ include 'includes/header.php';
                         <div class="product-card" 
                              data-category="<?= htmlspecialchars($row['series']) ?>" 
                              data-price="<?= $row['price'] ?>">
-                            
+                             
                             <?php if (!empty($row['is_hot'])): ?>
                                 <div class="sale-badge">Hot</div>
                             <?php endif; ?>
@@ -82,7 +81,7 @@ include 'includes/header.php';
                         </div>
                     <?php endforeach; ?>
                 <?php else: ?>
-                    <p style="grid-column: 1/-1; text-align: center;">Hiện chưa có sản phẩm Samsung nào.</p>
+                    <p style="grid-column: 1/-1; text-align: center;">Hiện chưa có sản phẩm Xiaomi nào.</p>
                 <?php endif; ?>
             </div>
         </div>
