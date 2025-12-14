@@ -1,0 +1,88 @@
+<?php
+session_start();
+// Nếu đã đăng nhập rồi thì đá về trang chủ, không cho vào trang login nữa
+if (isset($_SESSION['user_id'])) {
+    header('Location: index.php');
+    exit;
+}
+?>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Đăng nhập - THE KING</title>
+    <link rel="stylesheet" href="css/login.css">
+    <style>
+        .error-msg {
+            color: #e74c3c;
+            background: #fadbd8;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-bg">
+    <div class="login-overlay"></div>
+</div>
+
+<div class="login-wrapper">
+    <form class="login-form" action="xuly_login.php" method="POST">
+     
+        <div class="login-header">
+            <a href="index.php" class="back-btn-inside">←</a>
+            <h1><b>The King</b></h1>
+        </div>
+
+        <?php if (isset($_SESSION['error'])): ?>
+    <div class="error-msg" style="color: red; background: #fadbd8; padding: 10px; margin-bottom: 10px; text-align: center;">
+        <?= $_SESSION['error']; ?>
+        <?php unset($_SESSION['error']); ?>
+    </div>
+<?php endif; ?>
+
+<?php if (isset($_SESSION['success'])): ?>
+    <div class="success-msg" style="color: green; background: #d4edda; padding: 10px; margin-bottom: 10px; text-align: center;">
+        <?= $_SESSION['success']; ?>
+        <?php unset($_SESSION['success']); ?>
+    </div>
+<?php endif; ?>
+
+        <div class="input-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="Nhập email..." required>
+        </div>
+
+        <div class="input-group">
+            <label for="password">Mật khẩu</label>
+            <div class="password-wrapper">
+                <input type="password" id="password" name="password" placeholder="Nhập mật khẩu..." required>
+                <span class="toggle-password" onclick="togglePass()">👁</span>
+            </div>
+        </div>
+
+        <div class="extra-options">
+            <label><input type="checkbox" name="remember"> Lưu đăng nhập</label>
+            <a href="forgot.php">Quên mật khẩu?</a>
+        </div>
+
+        <button type="submit" class="cta-button">Đăng nhập</button>
+
+        <div class="login-links">
+            <a href="register.php">Tạo tài khoản mới</a>
+        </div>
+    </form>
+</div>
+
+<script>
+function togglePass() {
+    let pass = document.getElementById("password");
+    pass.type = pass.type === "password" ? "text" : "password";
+}
+</script>
+</body>
+</html>
