@@ -59,24 +59,24 @@ if (isset($_SESSION['user_id'])) {
             <label for="fullname">Họ và tên</label>
             <input type="text" id="fullname" name="fullname" 
                    value="<?= isset($_SESSION['old_data']['fullname']) ? $_SESSION['old_data']['fullname'] : '' ?>" 
-                   placeholder="Nhập họ tên..." required>
+                   placeholder="Nhập họ tên..." >
         </div>
 
         <div class="input-group">
             <label for="email">Email</label>
             <input type="email" id="email" name="email" 
                    value="<?= isset($_SESSION['old_data']['email']) ? $_SESSION['old_data']['email'] : '' ?>" 
-                   placeholder="Nhập email..." required>
+                   placeholder="Nhập email..." >
         </div>
 
         <div class="input-group">
             <label for="password">Mật khẩu</label>
-            <input type="password" id="password" name="password" placeholder="Tạo mật khẩu (tối thiểu 6 ký tự)..." required>
+            <input type="password" id="password" name="password" placeholder="Tạo mật khẩu (tối thiểu 6 ký tự)..." >
         </div>
 
         <div class="input-group">
             <label for="password_confirm">Nhập lại mật khẩu</label>
-            <input type="password" id="password_confirm" name="password_confirm" placeholder="Nhập lại mật khẩu..." required>
+            <input type="password" id="password_confirm" name="password_confirm" placeholder="Nhập lại mật khẩu..." >
         </div>
 
         <button type="submit" class="cta-button">Đăng ký</button>

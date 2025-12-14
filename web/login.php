@@ -54,13 +54,13 @@ if (isset($_SESSION['user_id'])) {
 
         <div class="input-group">
             <label for="email">Email</label>
-            <input type="email" id="email" name="email" placeholder="Nhập email..." required>
+            <input type="email" id="email" name="email" placeholder="Nhập email..." >
         </div>
 
         <div class="input-group">
             <label for="password">Mật khẩu</label>
             <div class="password-wrapper">
-                <input type="password" id="password" name="password" placeholder="Nhập mật khẩu..." required>
+                <input type="password" id="password" name="password" placeholder="Nhập mật khẩu..." >
                 <span class="toggle-password" onclick="togglePass()">👁</span>
             </div>
         </div>
