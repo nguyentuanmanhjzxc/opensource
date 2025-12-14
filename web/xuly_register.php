@@ -19,11 +19,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    // if ($password !== $password_confirm) {
-    //     $_SESSION['error'] = "Mật khẩu nhập lại không khớp!";
-    //     header('Location: register.php');
-    //     exit;
-    // }
+    if ($password !== $password_confirm) {
+        $_SESSION['error'] = "Mật khẩu nhập lại không khớp!";
+        header('Location: register.php');
+        exit;
+    }
 
     if (strlen($password) < 6) {
         $_SESSION['error'] = "Mật khẩu phải có ít nhất 6 ký tự!";
@@ -32,14 +32,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // 3. Kiểm tra xem Email đã tồn tại chưa
-    // $stmt = $conn->prepare("SELECT id FROM users WHERE email = :email");
-    // $stmt->execute(['email' => $email]);
+    $stmt = $conn->prepare("SELECT id FROM users WHERE email = :email");
+    $stmt->execute(['email' => $email]);
     
-    // if ($stmt->rowCount() > 0) {
-    //     $_SESSION['error'] = "Email này đã được đăng ký, vui lòng dùng email khác!";
-    //     header('Location: register.php');
-    //     exit;
-    // }
+    if ($stmt->rowCount() > 0) {
+        $_SESSION['error'] = "Email này đã được đăng ký, vui lòng dùng email khác!";
+        header('Location: register.php');
+        exit;
+    }
 
     // 4. Mã hóa mật khẩu (BẮT BUỘC)
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
