@@ -17,7 +17,6 @@ try {
 $pageTitle = "THE KING - Trang Chủ";
 include 'includes/header.php'; 
 ?>
-
     <main>
         <section class="hero-banner">
             <div class="slider-wrapper">
