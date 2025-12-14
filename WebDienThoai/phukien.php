@@ -1,4 +1,4 @@
-<?php
+~<?php
 session_start();
 require_once 'includes/db.php';
 
@@ -97,7 +97,6 @@ include 'includes/header.php';
         </div>
     </section>
 </main>
-
 <?php include 'includes/footer.php'; ?>
 
 <script src="js/category-filter.js"></script>
