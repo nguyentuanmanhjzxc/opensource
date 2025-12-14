@@ -20,15 +20,15 @@ $search = $_GET['search'] ?? '';
 $searchParam = "%$search%";
 
 // Lấy danh sách sản phẩm + Tên danh mục
-// $sql = "SELECT p.*, c.name as category_name 
-//         FROM products p 
-//         LEFT JOIN categories c ON p.category_id = c.id 
-//         WHERE p.name LIKE :search 
-//         ORDER BY p.id DESC";
+$sql = "SELECT p.*, c.name as category_name 
+        FROM products p 
+        LEFT JOIN categories c ON p.category_id = c.id 
+        WHERE p.name LIKE :search 
+        ORDER BY p.id DESC";
 
-// $stmt = $conn->prepare($sql);
-// $stmt->execute(['search' => $searchParam]);
-// $products = $stmt->fetchAll();
+$stmt = $conn->prepare($sql);
+$stmt->execute(['search' => $searchParam]);
+$products = $stmt->fetchAll();
 
 $pageTitle = "Quản Lý Sản Phẩm";
 $activePage = "products"; 
