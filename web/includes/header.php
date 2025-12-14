@@ -40,10 +40,8 @@ if (isset($_SESSION['cart'])) {
             </nav>
             <div class="header-icons">
                 <div class="search-container">
-                    <a href="#" id="search-icon">🔍Search</a>
-                    <form action="search.php" method="GET" class="search-form">
-                        <input type="text" name="q" placeholder="🔍Tìm kiếm..." class="search-input">
-                    </form>
+                    <a href="search.php" id="search-icon">🔍Search</a>
+                    
                 </div>
 
                 <?php if (isset($_SESSION['user_id'])): ?>
