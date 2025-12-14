@@ -15,7 +15,11 @@ if (empty($_SESSION['cart'])) {
     exit;
 }
 
-
+// 3. Lấy thông tin user để điền sẵn vào form
+$user_id = $_SESSION['user_id'];
+$stmt = $conn->prepare("SELECT * FROM users WHERE id = :id");
+$stmt->execute(['id' => $user_id]);
+$user = $stmt->fetch();
 
 // 4. Lấy thông tin sản phẩm trong giỏ để tính tiền
 $cart = $_SESSION['cart'];
